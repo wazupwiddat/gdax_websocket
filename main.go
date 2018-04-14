@@ -20,7 +20,7 @@ func main() {
 
 func connect(u string) gdax {
 	g := gdax{}
-	err := g.connect(*addr)
+	err := g.connect(u)
 	if err != nil {
 		log.Fatal("connect:", err)
 	}
