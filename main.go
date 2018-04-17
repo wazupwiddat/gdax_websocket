@@ -16,7 +16,7 @@ func main() {
 	flag.Parse()
 	log.SetFlags(0)
 
-	gk := NewKinesisStream(*stream, *region)
+	gk := NewKinesisStream(*stream, *region, *awsProfile)
 
 	g := connect(*addr)
 	sendSubscribe("BTC-USD", g)

@@ -17,12 +17,12 @@ type GdaxKinesis struct {
 }
 
 // NewKinesisStream creates a new instance of the GDAX Kinesis stream.
-func NewKinesisStream(name string, region string) *GdaxKinesis {
+func NewKinesisStream(name string, region string, awsProfile string) *GdaxKinesis {
 	//s := session.New(&aws.Config{Region: aws.String(region)})
 	//s := session.Must(session.NewSession())
 	s := session.Must(session.NewSessionWithOptions(session.Options{
 		Config:  aws.Config{Region: aws.String(region)},
-		Profile: "jdub",
+		Profile: awsProfile,
 	}))
 
 	gk := &GdaxKinesis{
