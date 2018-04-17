@@ -5,15 +5,22 @@ import (
 	"log"
 )
 
-var addr = flag.String("addr", "ws-feed.gdax.com", "")
+var (
+	addr       = flag.String("addr", "ws-feed.gdax.com", "")
+	awsProfile = flag.String("profile", "jdub", "AWS Access Key Profile")
+	stream     = flag.String("stream", "gdax-websocket", "your stream name")
+	region     = flag.String("region", "us-east-1", "your AWS region")
+)
 
 func main() {
 	flag.Parse()
 	log.SetFlags(0)
 
+	gk := NewKinesisStream(*stream, *region)
+
 	g := connect(*addr)
 	sendSubscribe("BTC-USD", g)
-	g.startListening()
+	g.startListening(gk)
 
 	log.Println("finished")
 }
