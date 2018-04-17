@@ -45,7 +45,7 @@ func (g gdax) subscribe(s *subscribe) error {
 	return nil
 }
 
-func (g gdax) startListening() {
+func (g gdax) startListening(gk *GdaxKinesis) {
 	defer g.conn.Close()
 	done := make(chan struct{})
 
@@ -58,7 +58,8 @@ func (g gdax) startListening() {
 				log.Println("read:", err)
 				return
 			}
-			log.Printf("recv: %s", message)
+			//log.Println(message)
+			gk.writeMessage(message)
 		}
 	}()
 
