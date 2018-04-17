@@ -9,17 +9,19 @@ import (
 	"github.com/aws/aws-sdk-go/service/kinesis"
 )
 
-// GdaxKinesis provides stuff
+// GdaxKinesis manages creating a Kinesis Data Stream for the purpose of
+// writing the websocket messages from GDAX
 type GdaxKinesis struct {
 	streamName string
 	session    *session.Session
 	stream     *kinesis.Kinesis
 }
 
-// NewKinesisStream creates a new instance of the GDAX Kinesis stream.
+// NewKinesisStream creates a new instance of the GDAX Kinesis stream,
+// if one does not already exists.
+//
+// The session will use credentials from your specified AWS Profile
 func NewKinesisStream(name string, region string, awsProfile string) *GdaxKinesis {
-	//s := session.New(&aws.Config{Region: aws.String(region)})
-	//s := session.Must(session.NewSession())
 	s := session.Must(session.NewSessionWithOptions(session.Options{
 		Config:  aws.Config{Region: aws.String(region)},
 		Profile: awsProfile,
